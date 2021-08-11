@@ -35,12 +35,20 @@ abstract class ImageProvider {
   final int? _width;
 
   /// Image width
-  int? get width => orientation.index >= 4 ? _height : _width;
+  int? get width => orientation == null
+      ? _width
+      : orientation.index >= 4
+          ? _height
+          : _width;
 
   final int _height;
 
   /// Image height
-  int? get height => orientation.index < 4 ? _height : _width;
+  int? get height => orientation == null
+      ? _height
+      : orientation.index < 4
+          ? _height
+          : _width;
 
   /// The internal orientation of the image
   final PdfImageOrientation orientation;
@@ -57,8 +65,10 @@ abstract class ImageProvider {
     if (effectiveDpi == null || _cache[0] != null) {
       _cache[0] ??= buildImage(context);
 
-      assert(_cache[0]!.pdfDocument == context.document,
-          'Do not reuse an ImageProvider object across multiple documents');
+      if (_cache[0]!.pdfDocument != context.document) {
+        _cache[0] = buildImage(context);
+      }
+
       return _cache[0]!;
     }
 
@@ -69,8 +79,10 @@ abstract class ImageProvider {
       _cache[width] ??= buildImage(context, width: width, height: height);
     }
 
-    assert(_cache[width]!.pdfDocument == context.document,
-        'Do not reuse an ImageProvider object across multiple documents');
+    if (_cache[width]!.pdfDocument != context.document) {
+      _cache[width] = buildImage(context, width: width, height: height);
+    }
+
     return _cache[width]!;
   }
 }
