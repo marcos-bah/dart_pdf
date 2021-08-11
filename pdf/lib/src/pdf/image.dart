@@ -209,12 +209,20 @@ class PdfImage extends PdfXObject {
   final int _width;
 
   /// Image width
-  int get width => orientation.index >= 4 ? _height : _width;
+  int get width => orientation == null
+      ? _width
+      : orientation.index >= 4
+          ? _height
+          : _width;
 
   final int _height;
 
   /// Image height
-  int get height => orientation.index < 4 ? _height : _width;
+  int get height => orientation == null
+      ? _height
+      : orientation.index < 4
+          ? _height
+          : _width;
 
   /// The internal orientation of the image
   final PdfImageOrientation orientation;

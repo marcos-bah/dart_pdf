@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 import 'dart:collection';
 import 'dart:math' as math;
 
@@ -183,31 +184,35 @@ class PdfGraphics {
 
     // q w 0 0 h x y cm % the coordinate matrix
     _buf.putString('q ');
-    switch (img.orientation) {
-      case PdfImageOrientation.topLeft:
-        PdfNumList(<double>[w, 0, 0, h, x, y]).output(_buf);
-        break;
-      case PdfImageOrientation.topRight:
-        PdfNumList(<double>[-w, 0, 0, h, w + x, y]).output(_buf);
-        break;
-      case PdfImageOrientation.bottomRight:
-        PdfNumList(<double>[-w, 0, 0, -h, w + x, h + y]).output(_buf);
-        break;
-      case PdfImageOrientation.bottomLeft:
-        PdfNumList(<double>[w, 0, 0, -h, x, h + y]).output(_buf);
-        break;
-      case PdfImageOrientation.leftTop:
-        PdfNumList(<double>[0, -h, -w, 0, w + x, h + y]).output(_buf);
-        break;
-      case PdfImageOrientation.rightTop:
-        PdfNumList(<double>[0, -h, w, 0, x, h + y]).output(_buf);
-        break;
-      case PdfImageOrientation.rightBottom:
-        PdfNumList(<double>[0, h, w, 0, x, y]).output(_buf);
-        break;
-      case PdfImageOrientation.leftBottom:
-        PdfNumList(<double>[0, h, -w, 0, w + x, y]).output(_buf);
-        break;
+    if (img.orientation == null) {
+      PdfNumList(<double>[w, 0, 0, h, x, y]).output(_buf);
+    } else {
+      switch (img.orientation) {
+        case PdfImageOrientation.topLeft:
+          PdfNumList(<double>[w, 0, 0, h, x, y]).output(_buf);
+          break;
+        case PdfImageOrientation.topRight:
+          PdfNumList(<double>[-w, 0, 0, h, w + x, y]).output(_buf);
+          break;
+        case PdfImageOrientation.bottomRight:
+          PdfNumList(<double>[-w, 0, 0, -h, w + x, h + y]).output(_buf);
+          break;
+        case PdfImageOrientation.bottomLeft:
+          PdfNumList(<double>[w, 0, 0, -h, x, h + y]).output(_buf);
+          break;
+        case PdfImageOrientation.leftTop:
+          PdfNumList(<double>[0, -h, -w, 0, w + x, h + y]).output(_buf);
+          break;
+        case PdfImageOrientation.rightTop:
+          PdfNumList(<double>[0, -h, w, 0, x, h + y]).output(_buf);
+          break;
+        case PdfImageOrientation.rightBottom:
+          PdfNumList(<double>[0, h, w, 0, x, y]).output(_buf);
+          break;
+        case PdfImageOrientation.leftBottom:
+          PdfNumList(<double>[0, h, -w, 0, w + x, y]).output(_buf);
+          break;
+      }
     }
 
     _buf.putString(' cm ${img.name} Do Q\n');
