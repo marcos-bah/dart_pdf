@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.4.2
+
+- Revert dart format
+
+## 3.4.1
+
+- Fix Nunito font parsing
+- Allow reusing an ImageProvider and Font on multiple documents
+
 ## 3.4.0
 
 - Fix Text.softWrap behavior
@@ -15,7 +24,7 @@
 
 ## 3.3.0
 
-- Implement To be signed flieds
+- Implement To be signed fields
 - Improve Text rendering
 - Add individual cell decoration
 - Improve Bullet Widget
